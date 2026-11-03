@@ -14,15 +14,16 @@
     --accent: #ffcf5c;
   }
   * { box-sizing: border-box; }
-  html, body { margin: 0; height: 100%; }
+  html, body { margin: 0; min-height: 100%; }
   body {
-    background: radial-gradient(ellipse at top, #1d2050 0%, var(--bg) 60%);
+    background: radial-gradient(ellipse at top, #1d2050 0%, var(--bg) 60%) fixed;
     color: var(--text);
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    display: flex; align-items: center; justify-content: center;
-    padding: 16px; overflow: hidden; touch-action: none;
+    display: flex; min-height: 100vh;
+    padding: 16px; touch-action: none;
   }
-  .game { display: flex; gap: 16px; align-items: flex-start; }
+  /* margin:auto centres when there's room and never clips when there isn't */
+  .game { display: flex; gap: 16px; align-items: flex-start; margin: auto; }
   .board-wrap { position: relative; }
   canvas#board {
     display: block; background: var(--panel);
@@ -57,8 +58,7 @@
   }
   .touch { display: none; }
   @media (max-width: 640px), (pointer: coarse) {
-    body { align-items: flex-start; }
-    .game { flex-direction: column; align-items: center; gap: 10px; }
+    .game { margin: 0 auto; flex-direction: column; align-items: center; gap: 10px; }
     .side { flex-direction: row; flex-wrap: wrap; justify-content: center; min-width: 0; gap: 8px; }
     .side .card { padding: 6px 10px; }
     .value { font-size: 16px; }
@@ -369,7 +369,7 @@
     }
     const a = KEYS[e.key];
     if (!a) return;
-    e.preventDefault();
+    e.preventDefault(); // also stops arrows/space scrolling the page
     act(a);
   });
 
